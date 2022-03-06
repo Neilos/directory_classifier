@@ -1,0 +1,41 @@
+require:
+  - rubocop-rspec
+AllCops:
+  TargetRubyVersion: 3.0
+Style/Documentation:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Max: 12
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - "spec/documentation/**/*"
+RSpec/SharedContext:
+  Exclude:
+    - "spec/support/shared_examples/**/*"
+RSpec/ScatteredSetup:
+  Exclude:
+    - "spec/documentation/**/*"
+RSpec/VariableName:
+  IgnoredPatterns:
+    - Accept
+    - Authorization
+    - Token-Type
+    - Token
+RSpec/MessageSpies:
+  Enabled: false
+RSpec/NestedGroups:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/FilePath:
+  SpecSuffixOnly: true
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - "spec/**/*"
