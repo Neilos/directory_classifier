@@ -39,3 +39,6 @@ Metrics/BlockLength:
   Enabled: true
   Exclude:
     - "spec/**/*"
+
+Naming/VariableNumber:
+  Enabled: false
