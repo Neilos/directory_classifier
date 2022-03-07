@@ -338,4 +338,50 @@ RSpec.describe ContributionSet do
       )
     end
   end
+
+  describe 'csv_headers' do
+    subject(:csv_headers) { contribution_set.csv_headers }
+
+    specify do
+      expect(csv_headers).to eq(
+        [
+          'path',
+          'total_number_of_lines',
+          'primary_contributor',
+          *contributors_of_interest.sort
+        ]
+      )
+    end
+  end
+
+  describe 'as_csv_row' do
+    subject(:csv_row) { contribution_set.as_csv_row }
+
+    let(:contribution_1) { Contribution.new(contributor: 'Wawel Dragons', line_count: 5) }
+    let(:contribution_2) { Contribution.new(contributor: 'Wawel Dragons', line_count: 7) }
+    let(:contribution_3) { Contribution.new(contributor: 'Tribe', line_count: 6) }
+    let(:contribution_4) { Contribution.new(contributor: 'Pooh Bear', line_count: 11) }
+
+    before do
+      contribution_set << contribution_1
+      contribution_set << contribution_2
+      contribution_set << contribution_3
+      contribution_set << contribution_4
+    end
+
+    specify do
+      expect(csv_row).to eq(
+        [
+          path,
+          29,
+          'Wawel Dragons',
+          0,
+          11,
+          6,
+          0,
+          12
+        ]
+      )
+    end
+  end
 end

@@ -2,7 +2,7 @@
 
 require_relative 'contribution'
 
-class ContributionSet
+class ContributionSet # rubocop:disable Metrics/ClassLength
   PathMismatchError = Class.new(StandardError)
   InvalidPathError = Class.new(StandardError)
 
@@ -35,11 +35,11 @@ class ContributionSet
   end
 
   def contributions
-    store.values
+    store.values_at(*contributors)
   end
 
   def contributors
-    store.keys
+    store.keys.sort
   end
 
   def largest_contribution
@@ -63,11 +63,23 @@ class ContributionSet
     }
   end
 
+  def csv_headers
+    ['path', 'total_number_of_lines', 'primary_contributor', *contributors]
+  end
+
+  def as_csv_row
+    [path, total_number_of_lines, primary_contributor, *line_counts]
+  end
+
   attr_reader :store, :pathname
 
   protected
 
   attr_writer :store, :pathname
+
+  def line_counts
+    store.values_at(*contributors).map(&:line_count)
+  end
 
   def path_segments
     path.split('/')
@@ -124,5 +136,4 @@ class ContributionSet
   def absolute_base_pathname
     @absolute_base_pathname ||= Pathname.new(FileUtils.pwd)
   end
-
 end
