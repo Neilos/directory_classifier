@@ -12,12 +12,14 @@ class CsvWriter
 
   attr_reader :output_path, :headers
 
-  def add_headers(headers)
-    self.headers = headers
+  def add_headers(new_headers)
+    return unless headers.empty?
 
     CSV.open(output_path, 'wb') do |csv|
-      csv << headers
+      csv << new_headers
     end
+
+    self.headers = new_headers
   end
 
   def add_row(row_content)
