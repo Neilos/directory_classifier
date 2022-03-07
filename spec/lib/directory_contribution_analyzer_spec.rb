@@ -38,35 +38,45 @@ RSpec.describe DirectoryContributionAnalyzer do
       end
 
       context 'when directory is NOT empty' do
-        let(:path) { 'spec/test_directory/' }
+        context 'with only 1 file in the directory' do
+          let(:path) { 'spec/test_directory_with_one_file/' }
 
-        it 'returns contributor contributions for the directory' do
-          expect(directory_contribution_set).to have_attributes(
-            path: 'spec/test_directory',
-            contributions: contain_exactly(
-              an_object_having_attributes(contributor: 'Tribe', line_count: 0),
-              an_object_having_attributes(contributor: 'Pooh Bear', line_count: 7),
-              an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
-              an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
-            )
-          )
-        end
-
-        context 'when a block is given' do
-          let(:empty_subdirectory_contribution_set) do
-            an_object_having_attributes(
-              path: 'spec/test_directory/empty_directory',
+          it 'returns contributor contributions for the directory' do
+            expect(directory_contribution_set).to have_attributes(
+              path: 'spec/test_directory_with_one_file',
               contributions: contain_exactly(
                 an_object_having_attributes(contributor: 'Tribe', line_count: 0),
-                an_object_having_attributes(contributor: 'Pooh Bear', line_count: 0),
+                an_object_having_attributes(contributor: 'Pooh Bear', line_count: 4),
                 an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
                 an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
               )
             )
           end
 
-          let(:parent_directory_contribution_set) do
-            an_object_having_attributes(
+          context 'when a block is given' do
+            it 'yields each directory and sub-directory to the block' do
+              expect do |blk|
+                directory_contribution_analyzer.directory_contribution_set(&blk)
+              end.to yield_successive_args(
+                an_object_having_attributes(
+                  path: 'spec/test_directory_with_one_file',
+                  contributions: contain_exactly(
+                    an_object_having_attributes(contributor: 'Tribe', line_count: 0),
+                    an_object_having_attributes(contributor: 'Pooh Bear', line_count: 4),
+                    an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
+                    an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
+                  )
+                )
+              )
+            end
+          end
+        end
+
+        context 'with multiple files and sub-directories' do
+          let(:path) { 'spec/test_directory/' }
+
+          it 'returns contributor contributions for the directory' do
+            expect(directory_contribution_set).to have_attributes(
               path: 'spec/test_directory',
               contributions: contain_exactly(
                 an_object_having_attributes(contributor: 'Tribe', line_count: 0),
@@ -77,11 +87,39 @@ RSpec.describe DirectoryContributionAnalyzer do
             )
           end
 
-          it 'yields each directory and sub-directory to the block' do
-            expect { |blk| directory_contribution_analyzer.directory_contribution_set(&blk) }.to yield_successive_args(
-              empty_subdirectory_contribution_set,
-              parent_directory_contribution_set
-            )
+          context 'when a block is given' do
+            let(:empty_subdirectory_contribution_set) do
+              an_object_having_attributes(
+                path: 'spec/test_directory/empty_directory',
+                contributions: contain_exactly(
+                  an_object_having_attributes(contributor: 'Tribe', line_count: 0),
+                  an_object_having_attributes(contributor: 'Pooh Bear', line_count: 0),
+                  an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
+                  an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
+                )
+              )
+            end
+
+            let(:parent_directory_contribution_set) do
+              an_object_having_attributes(
+                path: 'spec/test_directory',
+                contributions: contain_exactly(
+                  an_object_having_attributes(contributor: 'Tribe', line_count: 0),
+                  an_object_having_attributes(contributor: 'Pooh Bear', line_count: 7),
+                  an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
+                  an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
+                )
+              )
+            end
+
+            it 'yields each directory and sub-directory to the block' do
+              expect do |blk|
+                directory_contribution_analyzer.directory_contribution_set(&blk)
+              end.to yield_successive_args(
+                empty_subdirectory_contribution_set,
+                parent_directory_contribution_set
+              )
+            end
           end
         end
       end

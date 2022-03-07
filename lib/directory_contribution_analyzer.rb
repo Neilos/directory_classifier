@@ -26,7 +26,7 @@ class DirectoryContributionAnalyzer
     return file_contribution_set unless path_is_directory?
     return empty_contribution_set if directory_is_empty?
 
-    subdirectory_contribution_sets(&block).reduce(&:+)
+    empty_contribution_set + subdirectory_contribution_sets(&block).reduce(&:+)
   end
 
   def subdirectory_contribution_sets(&block)
@@ -62,7 +62,7 @@ class DirectoryContributionAnalyzer
   end
 
   def empty_contribution_set
-    ContributionSet.new(path: path, contributors: contributors)
+    @empty_contribution_set ||= ContributionSet.new(path: path, contributors: contributors)
   end
 
   def contributors
