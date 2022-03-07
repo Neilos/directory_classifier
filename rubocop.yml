@@ -39,6 +39,7 @@ Metrics/BlockLength:
   Enabled: true
   Exclude:
     - "spec/**/*"
+    - "Rakefile"
 
 Naming/VariableNumber:
   Enabled: false
