@@ -62,7 +62,7 @@ class DirectoryContributionAnalyzer
   end
 
   def empty_contribution_set
-    @empty_contribution_set ||= ContributionSet.new(path: path, contributors: contributors)
+    ContributionSet.new(path: path, contributors: contributors)
   end
 
   def contributors
