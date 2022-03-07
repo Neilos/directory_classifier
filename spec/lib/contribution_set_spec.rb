@@ -84,15 +84,17 @@ RSpec.describe ContributionSet do
     let(:contribution_2) { Contribution.new(contributor: 'Wawel Dragons', line_count: 7) }
     let(:contribution_3) { Contribution.new(contributor: 'Tribe', line_count: 6) }
     let(:contribution_4) { Contribution.new(contributor: 'Pooh Bear', line_count: 11) }
+    let(:contribution_5) { Contribution.new(contributor: Contribution::UNKNOWN_CONTRIBUTOR, line_count: 40) }
 
     before do
       contribution_set << contribution_1
       contribution_set << contribution_2
       contribution_set << contribution_3
       contribution_set << contribution_4
+      contribution_set << contribution_5
     end
 
-    it 'is the contribution with the largest line_count' do
+    it 'is the contribution for a known congributor with the largest line_count' do
       expect(largest_contribution).to have_attributes(
         contributor: 'Wawel Dragons', line_count: 12
       )
@@ -106,12 +108,14 @@ RSpec.describe ContributionSet do
     let(:contribution_2) { Contribution.new(contributor: 'Wawel Dragons', line_count: 7) }
     let(:contribution_3) { Contribution.new(contributor: 'Tribe', line_count: 6) }
     let(:contribution_4) { Contribution.new(contributor: 'Pooh Bear', line_count: 11) }
+    let(:contribution_5) { Contribution.new(contributor: Contribution::UNKNOWN_CONTRIBUTOR, line_count: 40) }
 
     before do
       contribution_set << contribution_1
       contribution_set << contribution_2
       contribution_set << contribution_3
       contribution_set << contribution_4
+      contribution_set << contribution_5
     end
 
     it 'is the contributor of the largest_contribution' do

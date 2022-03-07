@@ -46,7 +46,7 @@ class ContributionSet
   end
 
   def largest_contribution
-    contributions.max
+    contributions.reject { |contribution| contribution.contributor == Contribution::UNKNOWN_CONTRIBUTOR }.max
   end
 
   def primary_contributor
