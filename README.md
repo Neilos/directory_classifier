@@ -15,3 +15,18 @@ rake directory_classifier:contributors[\
 '/Users/neil.atkinson/work/contributor_classifier/contributions_output.csv'\
 ]
 ```
+
+## `directory_classifier:categories`
+
+Outputs directory classifications by category
+
+Example:
+
+```bash
+rake directory_classifier:categories[\
+'/Users/neil.atkinson/work/api',\
+'/Users/neil.atkinson/work/api/app;/Users/neil.atkinson/work/api/spec;/Users/neil.atkinson/work/api/lib/tasks;/Users/neil.atkinson/work/api/gems',\
+'/Users/neil.atkinson/work/contributor_classifier/example_categories.yml',\
+'/Users/neil.atkinson/work/contributor_classifier/categories_output.csv'\
+]
+```
