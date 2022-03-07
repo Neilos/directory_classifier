@@ -109,14 +109,6 @@ class ContributionSet # rubocop:disable Metrics/ClassLength
     relative_base_pathname.to_path
   end
 
-  def for_parent_directory?(other_contribution)
-    path.start_with?(other_contribution.path)
-  end
-
-  def for_subdirectory?(other_contribution)
-    other_contribution.path.start_with?(path)
-  end
-
   def ensure_real_path!
     pathname.realpath
   rescue Errno::ENOENT
