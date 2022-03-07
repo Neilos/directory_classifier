@@ -11,8 +11,8 @@ Example:
 rake directory_classifier:contributors[\
 '/Users/neil.atkinson/work/api',\
 '/Users/neil.atkinson/work/api/app;/Users/neil.atkinson/work/api/spec;/Users/neil.atkinson/work/api/lib/tasks;/Users/neil.atkinson/work/api/gems',\
-'/Users/neil.atkinson/work/contributor_classifier/example_contributors.yml',\
-'/Users/neil.atkinson/work/contributor_classifier/contributions_output.csv'\
+'/Users/neil.atkinson/work/directory_classifier/example_contributors.yml',\
+'/Users/neil.atkinson/work/directory_classifier/contributions_output.csv'\
 ]
 ```
 
@@ -26,7 +26,7 @@ Example:
 rake directory_classifier:categories[\
 '/Users/neil.atkinson/work/api',\
 '/Users/neil.atkinson/work/api/app;/Users/neil.atkinson/work/api/spec;/Users/neil.atkinson/work/api/lib/tasks;/Users/neil.atkinson/work/api/gems',\
-'/Users/neil.atkinson/work/contributor_classifier/example_categories.yml',\
-'/Users/neil.atkinson/work/contributor_classifier/categories_output.csv'\
+'/Users/neil.atkinson/work/directory_classifier/example_categories.yml',\
+'/Users/neil.atkinson/work/directory_classifier/categories_output.csv'\
 ]
 ```
