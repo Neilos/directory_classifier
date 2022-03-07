@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'contribution'
+require_relative 'contribution'
 
 class ContributionBuilder
   GIT_NAME_REGEX = /^\w{8}\s\((?<git_name>[\w\s]+)\s\d{4}-\d{2}-\d{2}/

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'contribution'
+require_relative 'contribution'
 
 class ContributionSet
   PathMismatchError = Class.new(StandardError)
