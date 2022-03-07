@@ -68,12 +68,4 @@ class DirectoryContributionAnalyzer
   def contributors
     contributors_lookup.values.uniq.push(Contribution::UNKNOWN_CONTRIBUTOR)
   end
-
-  def empty_unknown_file_contribution
-    @empty_unknown_file_contribution ||= Contribution.new(
-      path: path,
-      contribution_count: 0,
-      total_line_count: blame_lines.count
-    )
-  end
 end
