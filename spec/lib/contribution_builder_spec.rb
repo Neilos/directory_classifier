@@ -24,13 +24,41 @@ RSpec.describe ContributionBuilder do
     end
 
     context 'when contributor is recognised in the contributors_lookup' do
-      let(:blame_line) { '308f0de6 (Jimbo Weasle 2022-02-27 17:31:33 +0000 1) some file content' }
+      context 'when blame line contains path' do
+        let(:blame_line) do
+          '308f0de6      app/admin/funds.rb             (Jimbo Weasle 2022-02-27 17:31:33 +0000 1) some file content'
+        end
 
-      it 'returns a new contribution with the correct contributor' do
-        expect(new_contribution).to have_attributes(
-          contributor: 'Pooh Bear',
-          line_count: 1
-        )
+        it 'returns a new contribution with the correct contributor' do
+          expect(new_contribution).to have_attributes(
+            contributor: 'Pooh Bear',
+            line_count: 1
+          )
+        end
+      end
+
+      context 'when blame line has spaces after the git name' do
+        let(:blame_line) do
+          '308f0de6  app/admin/funds.rb        (Jimbo Weasle         2022-02-27 17:31:33 +0000 1) some file content'
+        end
+
+        it 'returns a new contribution with the correct contributor' do
+          expect(new_contribution).to have_attributes(
+            contributor: 'Pooh Bear',
+            line_count: 1
+          )
+        end
+      end
+
+      context 'when blame line contains no path' do
+        let(:blame_line) { '308f0de6 (Jimbo Weasle 2022-02-27 17:31:33 +0000 1) some file content' }
+
+        it 'returns a new contribution with the correct contributor' do
+          expect(new_contribution).to have_attributes(
+            contributor: 'Pooh Bear',
+            line_count: 1
+          )
+        end
       end
     end
 
