@@ -20,7 +20,17 @@ RSpec.describe ContributionSet do
   describe 'instantiation' do
     subject(:new_contribution_set) { contribution_set }
 
-    context 'with a real path' do
+    context 'with a real relative path' do
+      let(:path) { 'spec/test_directory' }
+
+      it 'does not raise an error' do
+        expect { new_contribution_set }.not_to raise_error
+      end
+    end
+
+    context 'with a real absolute path' do
+      let(:path) { Pathname.new('spec/test_directory').realdirpath.to_path }
+
       it 'does not raise an error' do
         expect { new_contribution_set }.not_to raise_error
       end
