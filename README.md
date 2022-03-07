@@ -1,4 +1,17 @@
 # Contributor classifier
 
-A script that accepts a given directory and returns a report for each subdirectory and file in the given directory.
-The report details a classification by contributor and by keyword category.
+
+## `directory_classifier:contributors`
+
+Outputs directory classifications by contributors
+
+Example:
+
+```bash
+rake directory_classifier:contributors[\
+'/Users/neil.atkinson/work/api',\
+'/Users/neil.atkinson/work/api/app;/Users/neil.atkinson/work/api/spec;/Users/neil.atkinson/work/api/lib/tasks;/Users/neil.atkinson/work/api/gems',\
+'/Users/neil.atkinson/work/contributor_classifier/example_contributors.yml',\
+'/Users/neil.atkinson/work/contributor_classifier/contributions_output.csv'\
+]
+```
