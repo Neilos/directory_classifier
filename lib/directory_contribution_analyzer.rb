@@ -10,23 +10,31 @@ class DirectoryContributionAnalyzer
     @path = path
   end
 
-  def directory_contribution_set
-    return file_contribution_set unless path_is_directory?
-    return empty_contribution_set if directory_is_empty?
+  def directory_contribution_set(&block)
+    contribution_set_for_this_directory = block ? contribution_set(&block) : contribution_set
 
-    subdirectory_contribution_sets.reduce(&:+)
+    block.call(contribution_set_for_this_directory) if path_is_directory? && block
+
+    contribution_set_for_this_directory
   end
 
   private
 
   attr_reader :contributors_lookup, :path
 
-  def subdirectory_contribution_sets
+  def contribution_set(&block)
+    return file_contribution_set unless path_is_directory?
+    return empty_contribution_set if directory_is_empty?
+
+    subdirectory_contribution_sets(&block).reduce(&:+)
+  end
+
+  def subdirectory_contribution_sets(&block)
     Dir.each_child(path).map do |child_path|
       self.class.new(
         contributors_lookup: contributors_lookup,
         path: File.join(path, child_path)
-      ).directory_contribution_set
+      ).directory_contribution_set(&block)
     end
   end
 
