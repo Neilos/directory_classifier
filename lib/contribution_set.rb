@@ -59,6 +59,7 @@ class ContributionSet
 
   def as_json
     {
+      path: path,
       contributions: store.transform_values(&:line_count),
       primary_contributor: primary_contributor,
       total_number_of_lines: total_number_of_lines

@@ -26,6 +26,7 @@ RSpec.describe DirectoryContributionAnalyzer do
 
         it 'returns contributor contributions for the directory' do
           expect(directory_contribution_set).to have_attributes(
+            path: 'spec/test_directory/empty_directory',
             contributions: contain_exactly(
               an_object_having_attributes(contributor: 'Tribe', line_count: 0),
               an_object_having_attributes(contributor: 'Pooh Bear', line_count: 0),
@@ -41,6 +42,7 @@ RSpec.describe DirectoryContributionAnalyzer do
 
         it 'returns contributor contributions for the directory' do
           expect(directory_contribution_set).to have_attributes(
+            path: 'spec/test_directory',
             contributions: contain_exactly(
               an_object_having_attributes(contributor: 'Tribe', line_count: 0),
               an_object_having_attributes(contributor: 'Pooh Bear', line_count: 7),
@@ -58,6 +60,7 @@ RSpec.describe DirectoryContributionAnalyzer do
 
         it 'returns contributor contributions for the file itself' do
           expect(directory_contribution_set).to have_attributes(
+            path: 'spec/test_directory/empty_file.txt',
             contributions: contain_exactly(
               an_object_having_attributes(contributor: 'Tribe', line_count: 0),
               an_object_having_attributes(contributor: 'Pooh Bear', line_count: 0),
@@ -73,6 +76,7 @@ RSpec.describe DirectoryContributionAnalyzer do
 
         it 'returns contributor contributions for the file itself' do
           expect(directory_contribution_set).to have_attributes(
+            path: 'spec/test_directory/test_file_2.txt',
             contributions: contain_exactly(
               an_object_having_attributes(contributor: 'Tribe', line_count: 0),
               an_object_having_attributes(contributor: 'Pooh Bear', line_count: 4),

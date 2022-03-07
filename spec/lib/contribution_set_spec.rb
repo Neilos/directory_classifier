@@ -324,6 +324,7 @@ RSpec.describe ContributionSet do
     it 'returns a jsonable representation of the set' do
       expect(jsonable_hash).to eq(
         {
+          path: path,
           contributions: {
             'Wawel Dragons' => 12,
             'Tribe' => 6,
