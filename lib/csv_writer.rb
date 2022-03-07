@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'csv'
 
 class CsvWriter
-
   def initialize(output_path)
     @output_path = output_path
     FileUtils.touch(output_path)
@@ -31,5 +32,4 @@ class CsvWriter
   private
 
   attr_writer :headers
-
 end
