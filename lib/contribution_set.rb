@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative 'contribution'
+require_relative 'path_traversal'
 
-class ContributionSet # rubocop:disable Metrics/ClassLength
-  PathMismatchError = Class.new(StandardError)
-  InvalidPathError = Class.new(StandardError)
+class ContributionSet
+  include PathTraversal
 
   def initialize(path:, contributors: [])
     @pathname = convert_to_relative_pathname(Pathname.new(path))
@@ -22,10 +22,6 @@ class ContributionSet # rubocop:disable Metrics/ClassLength
     else
       store[contribution.contributor] = contribution
     end
-  end
-
-  def path
-    pathname.to_path
   end
 
   def +(other)
@@ -71,61 +67,13 @@ class ContributionSet # rubocop:disable Metrics/ClassLength
     [path, total_number_of_lines, primary_contributor, *line_counts]
   end
 
-  attr_reader :store, :pathname
+  attr_reader :store
 
   protected
 
-  attr_writer :store, :pathname
+  attr_writer :store
 
   def line_counts
     store.values_at(*contributors).map(&:line_count)
-  end
-
-  def path_segments
-    path.split('/')
-  end
-
-  def path_length
-    path_segments.count
-  end
-
-  private
-
-  def path_shared_with(other_set)
-    return path if pathname == other_set.pathname
-
-    common_base_path(other_set)
-  end
-
-  def common_base_path(other_set)
-    max_path_length = [path_length, other_set.path_length].max
-
-    max_path_length.times.reverse_each do |index|
-      partial_path_segments = path_segments.slice(0, index + 1)
-      other_set_partial_path_segments = other_set.path_segments.slice(0, index + 1)
-      return File.join(partial_path_segments) if partial_path_segments == other_set_partial_path_segments
-    end
-
-    relative_base_pathname.to_path
-  end
-
-  def ensure_real_path!
-    pathname.realpath
-  rescue Errno::ENOENT
-    raise InvalidPathError
-  end
-
-  def convert_to_relative_pathname(some_pathname)
-    some_pathname.cleanpath.relative_path_from(
-      some_pathname.relative? ? relative_base_pathname : absolute_base_pathname
-    )
-  end
-
-  def relative_base_pathname
-    @relative_base_pathname ||= Pathname.new(absolute_base_pathname.to_path).relative_path_from(absolute_base_pathname)
-  end
-
-  def absolute_base_pathname
-    @absolute_base_pathname ||= Pathname.new(FileUtils.pwd)
   end
 end
