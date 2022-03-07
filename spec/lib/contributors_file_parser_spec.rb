@@ -5,7 +5,7 @@ require 'contributors_file_parser'
 
 RSpec.describe ContributorsFileParser do
   let(:parser) { described_class.new(filepath_to_contributors_yaml_file) }
-  let(:filepath_to_contributors_yaml_file) { './example_contributors.yml' }
+  let(:filepath_to_contributors_yaml_file) { 'spec/test_contributors.yml' }
 
   describe '#parse' do
     subject(:parsed_yaml) { parser.parse }
