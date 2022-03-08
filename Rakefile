@@ -12,6 +12,8 @@ RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
 
+SUBDIRECTORY_OF_OR_FILE_IN_UNITS = %r{^.+/units/[\w/]+}
+
 namespace :directory_classifier do
   desc 'Outputs directory classifications by contributors'
   task :contributors, [
@@ -29,9 +31,14 @@ namespace :directory_classifier do
             contributors_lookup: contributors_lookup,
             path: directory_to_classify
           ).directory_contribution_set do |contribution_set|
+            path = category_set.path
+
+            if !path.match?(SUBDIRECTORY_OF_OR_FILE_IN_UNITS) || Dir.exist?(path)
+              csv_writer.add_headers(contribution_set.csv_headers)
+              csv_writer.add_row(contribution_set.as_csv_row)
+            end
+
             print '.'
-            csv_writer.add_headers(contribution_set.csv_headers)
-            csv_writer.add_row(contribution_set.as_csv_row)
           end
         end
       end
@@ -54,9 +61,14 @@ namespace :directory_classifier do
             category_keywords: category_keywords,
             path: directory_to_classify
           ).directory_categorisation_set do |category_set|
+            path = category_set.path
+
+            if !path.match?(SUBDIRECTORY_OF_OR_FILE_IN_UNITS) || Dir.exist?(path)
+              csv_writer.add_headers(category_set.csv_headers)
+              csv_writer.add_row(category_set.as_csv_row)
+            end
+
             print '.'
-            csv_writer.add_headers(category_set.csv_headers)
-            csv_writer.add_row(category_set.as_csv_row)
           end
         end
       end
