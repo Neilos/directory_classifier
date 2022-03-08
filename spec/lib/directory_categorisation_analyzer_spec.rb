@@ -10,8 +10,8 @@ RSpec.describe DirectoryCategorisationAnalyzer do
 
   let(:category_keywords) do
     {
-      'file' => ['some file content', 'content', 'Some', 'some', 'file'],
-      'line' => %w[Line line]
+      'file' => Regexp.union(['some file content', 'content', 'Some', 'some', 'file']),
+      'line' => Regexp.union(%w[Line line])
     }
   end
 

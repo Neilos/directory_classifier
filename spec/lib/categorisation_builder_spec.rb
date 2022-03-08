@@ -12,12 +12,12 @@ RSpec.describe CategorisationBuilder do
       categorisation_builder.categorisation_from(
         file_content: file_content,
         category: category,
-        keywords: keywords
+        keyword_regexp: keyword_regexp
       )
     end
 
     let(:category) { 'a_category' }
-    let(:keywords) { %w[some_category SomeCategory some category] }
+    let(:keyword_regexp) { Regexp.union(%w[some_category SomeCategory some category]) }
 
     context 'when text contains no match' do
       let(:file_content) do
