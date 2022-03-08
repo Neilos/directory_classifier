@@ -55,6 +55,14 @@ RSpec.describe DirectoryCategorisationAnalyzer do
                 directory_categorisation_analyzer.directory_categorisation_set(&blk)
               end.to yield_successive_args(
                 an_object_having_attributes(
+                  path: 'spec/test_directory_with_one_file/test_file_3.txt',
+                  categorisations: contain_exactly(
+                    an_object_having_attributes(category: 'file', score: 8.0),
+                    an_object_having_attributes(category: 'line', score: 3.0),
+                    an_object_having_attributes(category: 'UNKNOWN', score: 0)
+                  )
+                ),
+                an_object_having_attributes(
                   path: 'spec/test_directory_with_one_file',
                   categorisations: contain_exactly(
                     an_object_having_attributes(category: 'file', score: 8.0),
@@ -82,34 +90,50 @@ RSpec.describe DirectoryCategorisationAnalyzer do
           end
 
           context 'when a block is given' do
-            let(:empty_subdirectory_categorisation_set) do
-              an_object_having_attributes(
-                path: 'spec/test_directory/empty_directory',
-                categorisations: contain_exactly(
-                  an_object_having_attributes(category: 'file', score: 0),
-                  an_object_having_attributes(category: 'line', score: 0),
-                  an_object_having_attributes(category: 'UNKNOWN', score: 0)
-                )
-              )
-            end
-
-            let(:parent_directory_categorisation_set) do
-              an_object_having_attributes(
-                path: 'spec/test_directory',
-                categorisations: contain_exactly(
-                  an_object_having_attributes(category: 'file', score: 13.25),
-                  an_object_having_attributes(category: 'line', score: 5.0),
-                  an_object_having_attributes(category: 'UNKNOWN', score: 0)
-                )
-              )
-            end
-
-            it 'yields each directory and sub-directory to the block' do
+            it 'yields each file, directory and sub-directory (except hidden ones) to the block' do
               expect do |blk|
                 directory_categorisation_analyzer.directory_categorisation_set(&blk)
               end.to yield_successive_args(
-                empty_subdirectory_categorisation_set,
-                parent_directory_categorisation_set
+                an_object_having_attributes(
+                  path: 'spec/test_directory/test_file_1.txt',
+                  categorisations: contain_exactly(
+                    an_object_having_attributes(category: 'file', score: 5.25),
+                    an_object_having_attributes(category: 'line', score: 2.0),
+                    an_object_having_attributes(category: 'UNKNOWN', score: 0)
+                  )
+                ),
+                an_object_having_attributes(
+                  path: 'spec/test_directory/test_file_2.txt',
+                  categorisations: contain_exactly(
+                    an_object_having_attributes(category: 'file', score: 8.0),
+                    an_object_having_attributes(category: 'line', score: 3.0),
+                    an_object_having_attributes(category: 'UNKNOWN', score: 0)
+                  )
+                ),
+                an_object_having_attributes(
+                  path: 'spec/test_directory/empty_file.txt',
+                  categorisations: contain_exactly(
+                    an_object_having_attributes(category: 'file', score: 0),
+                    an_object_having_attributes(category: 'line', score: 0),
+                    an_object_having_attributes(category: 'UNKNOWN', score: 0)
+                  )
+                ),
+                an_object_having_attributes(
+                  path: 'spec/test_directory/empty_directory',
+                  categorisations: contain_exactly(
+                    an_object_having_attributes(category: 'file', score: 0),
+                    an_object_having_attributes(category: 'line', score: 0),
+                    an_object_having_attributes(category: 'UNKNOWN', score: 0)
+                  )
+                ),
+                an_object_having_attributes(
+                  path: 'spec/test_directory',
+                  categorisations: contain_exactly(
+                    an_object_having_attributes(category: 'file', score: 13.25),
+                    an_object_having_attributes(category: 'line', score: 5.0),
+                    an_object_having_attributes(category: 'UNKNOWN', score: 0)
+                  )
+                )
               )
             end
           end

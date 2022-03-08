@@ -59,6 +59,15 @@ RSpec.describe DirectoryContributionAnalyzer do
                 directory_contribution_analyzer.directory_contribution_set(&blk)
               end.to yield_successive_args(
                 an_object_having_attributes(
+                  path: 'spec/test_directory_with_one_file/test_file_3.txt',
+                  contributions: contain_exactly(
+                    an_object_having_attributes(contributor: 'Tribe', line_count: 0),
+                    an_object_having_attributes(contributor: 'Pooh Bear', line_count: 4),
+                    an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
+                    an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
+                  )
+                ),
+                an_object_having_attributes(
                   path: 'spec/test_directory_with_one_file',
                   contributions: contain_exactly(
                     an_object_having_attributes(contributor: 'Tribe', line_count: 0),
@@ -88,36 +97,55 @@ RSpec.describe DirectoryContributionAnalyzer do
           end
 
           context 'when a block is given' do
-            let(:empty_subdirectory_contribution_set) do
-              an_object_having_attributes(
-                path: 'spec/test_directory/empty_directory',
-                contributions: contain_exactly(
-                  an_object_having_attributes(contributor: 'Tribe', line_count: 0),
-                  an_object_having_attributes(contributor: 'Pooh Bear', line_count: 0),
-                  an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
-                  an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
-                )
-              )
-            end
-
-            let(:parent_directory_contribution_set) do
-              an_object_having_attributes(
-                path: 'spec/test_directory',
-                contributions: contain_exactly(
-                  an_object_having_attributes(contributor: 'Tribe', line_count: 0),
-                  an_object_having_attributes(contributor: 'Pooh Bear', line_count: 7),
-                  an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
-                  an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
-                )
-              )
-            end
-
-            it 'yields each directory and sub-directory to the block' do
+            it 'yields each file, directory and sub-directory (except hidden ones) to the block' do
               expect do |blk|
                 directory_contribution_analyzer.directory_contribution_set(&blk)
               end.to yield_successive_args(
-                empty_subdirectory_contribution_set,
-                parent_directory_contribution_set
+                an_object_having_attributes(
+                  path: 'spec/test_directory/test_file_1.txt',
+                  contributions: contain_exactly(
+                    an_object_having_attributes(contributor: 'Tribe', line_count: 0),
+                    an_object_having_attributes(contributor: 'Pooh Bear', line_count: 3),
+                    an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
+                    an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
+                  )
+                ),
+                an_object_having_attributes(
+                  path: 'spec/test_directory/test_file_2.txt',
+                  contributions: contain_exactly(
+                    an_object_having_attributes(contributor: 'Tribe', line_count: 0),
+                    an_object_having_attributes(contributor: 'Pooh Bear', line_count: 4),
+                    an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
+                    an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
+                  )
+                ),
+                an_object_having_attributes(
+                  path: 'spec/test_directory/empty_file.txt',
+                  contributions: contain_exactly(
+                    an_object_having_attributes(contributor: 'Tribe', line_count: 0),
+                    an_object_having_attributes(contributor: 'Pooh Bear', line_count: 0),
+                    an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
+                    an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
+                  )
+                ),
+                an_object_having_attributes(
+                  path: 'spec/test_directory/empty_directory',
+                  contributions: contain_exactly(
+                    an_object_having_attributes(contributor: 'Tribe', line_count: 0),
+                    an_object_having_attributes(contributor: 'Pooh Bear', line_count: 0),
+                    an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
+                    an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
+                  )
+                ),
+                an_object_having_attributes(
+                  path: 'spec/test_directory',
+                  contributions: contain_exactly(
+                    an_object_having_attributes(contributor: 'Tribe', line_count: 0),
+                    an_object_having_attributes(contributor: 'Pooh Bear', line_count: 7),
+                    an_object_having_attributes(contributor: 'Wawel dragons', line_count: 0),
+                    an_object_having_attributes(contributor: 'UNKNOWN', line_count: 0)
+                  )
+                )
               )
             end
           end

@@ -13,7 +13,7 @@ class DirectoryContributionAnalyzer
   def directory_contribution_set(&block)
     contribution_set_for_this_directory = block ? contribution_set(&block) : contribution_set
 
-    block.call(contribution_set_for_this_directory) if path_is_directory? && block
+    block.call(contribution_set_for_this_directory) if block && !hidden?
 
     contribution_set_for_this_directory
   end
@@ -21,6 +21,10 @@ class DirectoryContributionAnalyzer
   private
 
   attr_reader :contributors_lookup, :path
+
+  def hidden?
+    Pathname.new(path).basename.to_s.start_with?('.')
+  end
 
   def contribution_set(&block)
     return file_contribution_set unless path_is_directory?

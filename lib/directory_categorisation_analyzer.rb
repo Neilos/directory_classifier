@@ -13,7 +13,7 @@ class DirectoryCategorisationAnalyzer
   def directory_categorisation_set(&block)
     categorisation_set_for_this_directory = block ? categorisation_set(&block) : categorisation_set
 
-    block.call(categorisation_set_for_this_directory) if path_is_directory? && block
+    block.call(categorisation_set_for_this_directory) if block && !hidden?
 
     categorisation_set_for_this_directory
   end
@@ -21,6 +21,10 @@ class DirectoryCategorisationAnalyzer
   private
 
   attr_reader :category_keywords, :path
+
+  def hidden?
+    Pathname.new(path).basename.to_s.start_with?('.')
+  end
 
   def categorisation_set(&block)
     return file_categorisation_set unless path_is_directory?
