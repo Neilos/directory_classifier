@@ -15,43 +15,37 @@ class CategoriesFileParser
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/BlockLength
   def parse
     categories.each_with_object({}) do |category, category_keywords|
-      raw_keywords = category.downcase.split(WORD_SEPARATOR)
-      raw_keyword_count = raw_keywords.count
+      split_category = category.downcase.split(WORD_SEPARATOR)
+      underscore_category = split_category.join('_')
+      category_as_words = split_category.join(' ')
 
-      keywords = (1..raw_keyword_count).flat_map do |keyword_word_count|
-        raw_keywords.each_cons(keyword_word_count).flat_map do |separated_keyword_part|
-          keyword_part = separated_keyword_part.join('_')
-          spaced_keyword_part = separated_keyword_part.join(' ')
+      keywords = [
+        camelize(underscore_category),
+        classify(underscore_category),
+        deconstantize(underscore_category),
+        demodulize(underscore_category),
+        humanize(underscore_category),
+        pluralize(underscore_category),
+        singularize(underscore_category),
+        tableize(underscore_category),
+        titleize(underscore_category),
+        underscore(underscore_category),
+        upcase_first(underscore_category),
+        underscore_category.upcase,
 
-          [
-            camelize(keyword_part),
-            classify(keyword_part),
-            deconstantize(keyword_part),
-            demodulize(keyword_part),
-            humanize(keyword_part),
-            pluralize(keyword_part),
-            singularize(keyword_part),
-            tableize(keyword_part),
-            titleize(keyword_part),
-            underscore(keyword_part),
-            upcase_first(keyword_part),
-            keyword_part.upcase,
-
-            camelize(spaced_keyword_part),
-            classify(spaced_keyword_part),
-            deconstantize(spaced_keyword_part),
-            demodulize(spaced_keyword_part),
-            humanize(spaced_keyword_part),
-            pluralize(spaced_keyword_part),
-            singularize(spaced_keyword_part),
-            tableize(spaced_keyword_part),
-            titleize(spaced_keyword_part),
-            underscore(spaced_keyword_part),
-            upcase_first(spaced_keyword_part),
-            spaced_keyword_part.upcase
-          ].uniq
-        end
-      end
+        camelize(category_as_words),
+        classify(category_as_words),
+        deconstantize(category_as_words),
+        demodulize(category_as_words),
+        humanize(category_as_words),
+        pluralize(category_as_words),
+        singularize(category_as_words),
+        tableize(category_as_words),
+        titleize(category_as_words),
+        underscore(category_as_words),
+        upcase_first(category_as_words),
+        category_as_words.upcase
+      ].uniq
 
       category_keywords[category] = Regexp.union(keywords.sort_by { |k| [k.length, k] }.reverse.reject(&:blank?))
     end

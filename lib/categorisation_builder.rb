@@ -7,7 +7,7 @@ class CategorisationBuilder
     def categorisation_from(file_content:, category:, keyword_regexp:)
       Categorisation.new(
         category: category,
-        score: file_content.scan(keyword_regexp).join.length / category.length.to_f
+        score: file_content.scan(keyword_regexp).join('-').length
       )
     end
   end

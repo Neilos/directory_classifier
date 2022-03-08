@@ -46,7 +46,7 @@ RSpec.describe CategorisationBuilder do
       it 'returns a categorisation with a score matching the keyword count divided by the category character count' do
         expect(new_categorisation).to have_attributes(
           category: category,
-          score: 4.9
+          score: 54
         )
       end
     end
