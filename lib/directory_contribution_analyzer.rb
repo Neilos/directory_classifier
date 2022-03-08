@@ -50,7 +50,9 @@ class DirectoryContributionAnalyzer
   end
 
   def blame_lines
-    @blame_lines ||= `git blame #{path}`.to_s.split(/\n/)
+    @blame_lines ||= `git blame #{path}`.to_s
+                                        .encode('UTF-8', invalid: :replace, undef: :replace, replace: '')
+                                        .split(/\n/)
   end
 
   def path_is_directory?

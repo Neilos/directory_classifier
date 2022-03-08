@@ -49,7 +49,9 @@ class DirectoryCategorisationAnalyzer
   end
 
   def file_content
-    @file_content ||= File.read(path)
+    @file_content ||= File.open(path, 'r') do |io|
+      io.read.encode('UTF-8', invalid: :replace, undef: :replace, replace: '')
+    end
   end
 
   def path_is_directory?
