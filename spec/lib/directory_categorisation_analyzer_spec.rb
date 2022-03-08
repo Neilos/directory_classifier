@@ -42,7 +42,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
             expect(directory_categorisation_set).to have_attributes(
               path: 'spec/test_directory_with_one_file',
               categorisations: contain_exactly(
-                an_object_having_attributes(category: 'file', score: 35),
+                an_object_having_attributes(category: 'file', score: 44),
                 an_object_having_attributes(category: 'line', score: 14),
                 an_object_having_attributes(category: 'UNKNOWN', score: 0)
               )
@@ -57,7 +57,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
                 an_object_having_attributes(
                   path: 'spec/test_directory_with_one_file/test_file_3.txt',
                   categorisations: contain_exactly(
-                    an_object_having_attributes(category: 'file', score: 35),
+                    an_object_having_attributes(category: 'file', score: 44),
                     an_object_having_attributes(category: 'line', score: 14),
                     an_object_having_attributes(category: 'UNKNOWN', score: 0)
                   )
@@ -65,7 +65,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
                 an_object_having_attributes(
                   path: 'spec/test_directory_with_one_file',
                   categorisations: contain_exactly(
-                    an_object_having_attributes(category: 'file', score: 35),
+                    an_object_having_attributes(category: 'file', score: 44),
                     an_object_having_attributes(category: 'line', score: 14),
                     an_object_having_attributes(category: 'UNKNOWN', score: 0)
                   )
@@ -82,7 +82,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
             expect(directory_categorisation_set).to have_attributes(
               path: 'spec/test_directory',
               categorisations: contain_exactly(
-                an_object_having_attributes(category: 'file', score: 57),
+                an_object_having_attributes(category: 'file', score: 69),
                 an_object_having_attributes(category: 'line', score: 23),
                 an_object_having_attributes(category: 'UNKNOWN', score: 0)
               )
@@ -97,7 +97,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
                 an_object_having_attributes(
                   path: 'spec/test_directory/test_file_1.txt',
                   categorisations: contain_exactly(
-                    an_object_having_attributes(category: 'file', score: 22),
+                    an_object_having_attributes(category: 'file', score: 26),
                     an_object_having_attributes(category: 'line', score: 9),
                     an_object_having_attributes(category: 'UNKNOWN', score: 0)
                   )
@@ -105,7 +105,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
                 an_object_having_attributes(
                   path: 'spec/test_directory/test_file_2.txt',
                   categorisations: contain_exactly(
-                    an_object_having_attributes(category: 'file', score: 35),
+                    an_object_having_attributes(category: 'file', score: 39),
                     an_object_having_attributes(category: 'line', score: 14),
                     an_object_having_attributes(category: 'UNKNOWN', score: 0)
                   )
@@ -113,7 +113,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
                 an_object_having_attributes(
                   path: 'spec/test_directory/empty_file.txt',
                   categorisations: contain_exactly(
-                    an_object_having_attributes(category: 'file', score: 0),
+                    an_object_having_attributes(category: 'file', score: 4),
                     an_object_having_attributes(category: 'line', score: 0),
                     an_object_having_attributes(category: 'UNKNOWN', score: 0)
                   )
@@ -129,7 +129,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
                 an_object_having_attributes(
                   path: 'spec/test_directory',
                   categorisations: contain_exactly(
-                    an_object_having_attributes(category: 'file', score: 57),
+                    an_object_having_attributes(category: 'file', score: 69),
                     an_object_having_attributes(category: 'line', score: 23),
                     an_object_having_attributes(category: 'UNKNOWN', score: 0)
                   )
@@ -149,7 +149,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
           expect(directory_categorisation_set).to have_attributes(
             path: 'spec/test_directory/empty_file.txt',
             categorisations: contain_exactly(
-              an_object_having_attributes(category: 'file', score: 0),
+              an_object_having_attributes(category: 'file', score: 4),
               an_object_having_attributes(category: 'line', score: 0),
               an_object_having_attributes(category: 'UNKNOWN', score: 0)
             )
@@ -164,7 +164,7 @@ RSpec.describe DirectoryCategorisationAnalyzer do
           expect(directory_categorisation_set).to have_attributes(
             path: 'spec/test_directory/test_file_2.txt',
             categorisations: contain_exactly(
-              an_object_having_attributes(category: 'file', score: 35),
+              an_object_having_attributes(category: 'file', score: 39),
               an_object_having_attributes(category: 'line', score: 14),
               an_object_having_attributes(category: 'UNKNOWN', score: 0)
             )

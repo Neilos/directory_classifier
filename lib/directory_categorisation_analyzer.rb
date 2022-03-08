@@ -45,6 +45,7 @@ class DirectoryCategorisationAnalyzer
   def file_categorisation_set
     category_keywords.each_with_object(empty_categorisation_set) do |(category, keyword_regexp), file_categorisations|
       file_categorisations << CategorisationBuilder.categorisation_from(
+        path: path,
         file_content: file_content,
         category: category,
         keyword_regexp: keyword_regexp
