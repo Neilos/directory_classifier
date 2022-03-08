@@ -31,7 +31,7 @@ namespace :directory_classifier do
             contributors_lookup: contributors_lookup,
             path: directory_to_classify
           ).directory_contribution_set do |contribution_set|
-            path = category_set.path
+            path = contribution_set.path
 
             if !path.match?(SUBDIRECTORY_OF_OR_FILE_IN_UNITS) || Dir.exist?(path)
               csv_writer.add_headers(contribution_set.csv_headers)
