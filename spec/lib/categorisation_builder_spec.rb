@@ -89,6 +89,23 @@ RSpec.describe CategorisationBuilder do
             )
           end
         end
+
+        context 'when path is absolute and absolute part contains a match' do
+          let(:keyword_regexp) { Regexp.union(%w[directory|classifier]) }
+          let(:path) { Dir.pwd }
+          let(:file_content) do
+            <<~TEXT
+              This text is irrelevant.
+            TEXT
+          end
+
+          it 'does not score the absolute part' do
+            expect(new_categorisation).to have_attributes(
+              category: category,
+              score: 0
+            )
+          end
+        end
       end
     end
   end
