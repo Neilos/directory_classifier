@@ -84,7 +84,7 @@ RSpec.describe CategorisationSet do
     let(:categorisation_2) { Categorisation.new(category: 'glidepaths', score: 7) }
     let(:categorisation_3) { Categorisation.new(category: 'portfolios', score: 6) }
     let(:categorisation_4) { Categorisation.new(category: 'investments', score: 11) }
-    let(:categorisation_5) { Categorisation.new(category: Categorisation::UNKNOWN_CATEGORY, score: 40) }
+    let(:categorisation_5) { Categorisation.new(category: Categorisation::UNKNOWN_CATEGORY, score: 8) }
 
     before do
       categorisation_set << categorisation_1
@@ -283,7 +283,9 @@ RSpec.describe CategorisationSet do
             'funds' => 0,
             'UNKNOWN' => 0
           },
-          primary_category: 'glidepaths'
+          sum_of_scores: 29,
+          primary_category: 'glidepaths',
+          primary_category_score: 12
         }
       )
     end
@@ -296,6 +298,8 @@ RSpec.describe CategorisationSet do
       expect(csv_headers).to eq(
         [
           'path',
+          'sum_of_scores',
+          'primary_category_score',
           'primary_category',
           *categories_of_interest.sort
         ]
@@ -320,7 +324,7 @@ RSpec.describe CategorisationSet do
 
     specify do
       expect(csv_row).to eq(
-        [path, 'glidepaths', 0, 0, 12, 11, 6]
+        [path, 29, 12,'glidepaths', 0, 0, 12, 11, 6]
       )
     end
   end

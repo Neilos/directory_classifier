@@ -46,20 +46,30 @@ class CategorisationSet
     highest_scoring_categorisation.category
   end
 
+  def primary_category_score
+    highest_scoring_categorisation.score
+  end
+
+  def sum_of_scores
+    categorisations.sum(&:score)
+  end
+
   def as_json
     {
       path: path,
       categorisations: store.transform_values(&:score),
-      primary_category: primary_category
+      sum_of_scores: sum_of_scores,
+      primary_category: primary_category,
+      primary_category_score: primary_category_score
     }
   end
 
   def csv_headers
-    ['path', 'primary_category', *categories]
+    ['path', 'sum_of_scores', 'primary_category_score', 'primary_category', *categories]
   end
 
   def as_csv_row
-    [path, primary_category, *scores]
+    [path, sum_of_scores, primary_category_score, primary_category, *scores]
   end
 
   attr_reader :store
