@@ -237,3 +237,10 @@ upcoming_statement_configurations
 users
 valuations
 versions
+
+buy_investment
+sell_investment
+switch
+phased_switch
+unallocated_unit
+reallocated_unit
