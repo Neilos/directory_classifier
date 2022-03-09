@@ -39,7 +39,7 @@ class CategorisationSet
   end
 
   def highest_scoring_categorisation
-    categorisations.reject { |categorisation| categorisation.category == Categorisation::UNKNOWN_CATEGORY }.max
+    categorisations.max
   end
 
   def primary_category
