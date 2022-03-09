@@ -85,7 +85,7 @@ RSpec.describe CategorisationBuilder do
           it 'returns a categorisation with a score matching the keyword count' do
             expect(new_categorisation).to have_attributes(
               category: category,
-              score: 13
+              score: 39
             )
           end
         end
@@ -102,7 +102,7 @@ RSpec.describe CategorisationBuilder do
           it 'returns a categorisation with a score matching the keyword count' do
             expect(new_categorisation).to have_attributes(
               category: category,
-              score: 67
+              score: 93
             )
           end
         end
