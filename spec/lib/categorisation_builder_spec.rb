@@ -20,6 +20,23 @@ RSpec.describe CategorisationBuilder do
     let(:category) { 'a_category' }
     let(:keyword_regexp) { Regexp.union(%w[some_category SomeCategory some category]) }
 
+    context 'when category is Categorisation::UNKNOWN_CATEGORY' do
+      let(:path) { 'a/path/that/some_category/matches' }
+      let(:category) { Categorisation::UNKNOWN_CATEGORY }
+      let(:file_content) do
+        <<~TEXT
+          unknown matches UNKOWN which is value of Categorisation::UNKNOWN_CATEGORY
+        TEXT
+      end
+
+      it 'returns an Categorisation::UNKNOWN_CATEGORY with a score of 0.5 (regardless of text and path matches)' do
+        expect(new_categorisation).to have_attributes(
+          category: category,
+          score: 0.5
+        )
+      end
+    end
+
     context 'when path does not contain match' do
       let(:path) { 'a/path/that/does_not_match' }
 

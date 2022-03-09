@@ -12,6 +12,8 @@ class CategorisationBuilder
     end
 
     def score(path, file_content, category, keyword_regexp)
+      return 0.5 if category == Categorisation::UNKNOWN_CATEGORY
+
       score_for(relative(path), keyword_regexp) + score_for(file_content, keyword_regexp)
     end
 
