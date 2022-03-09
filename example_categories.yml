@@ -7,7 +7,6 @@ adjustment_amounts
 adjustment_versions
 adjustments
 admin_user_identities
-admin_users
 adviser_companies
 adviser_contacts
 adviser_exclusion_from_charge_configurations
@@ -19,14 +18,12 @@ annual_statement_failures
 annual_statements
 annuity_rate_configurations
 apex_fund_contributions
-assessments
 asset_transfer_amounts
 asset_transfers
 async_jobs
 async_requests
 available_funds
 available_target_date_fund_groups
-bands
 bank_account_detail_versions
 bank_account_details
 beneficiaries
@@ -87,7 +84,6 @@ default_investment_instruments
 deleted_records
 divorce_orders
 document_generation_requests
-documents
 economic_zones
 eligibility_rules
 employee_configurations
@@ -100,14 +96,12 @@ employee_percentage_auto_increase_policies
 employee_plan_participations
 employee_projections
 employee_versions
-employees
 employees_payroll_configurations
 employment_categories
 employment_statuses
 enrolments
 envelopes
 exchange_rates
-exports
 expression_of_wishes
 fee_amounts
 fee_versions
@@ -130,12 +124,10 @@ glidepath_step_fund_splits
 glidepath_steps
 glidepaths
 gocardless_events
-groups
 historical_contributions
 historical_transfer_ins
 holdings_ledger_entries
 import_results
-imports
 investment_account_mappings
 investment_accounts
 investment_events
@@ -197,7 +189,6 @@ schemes_contribution_configurations
 shortcuts
 skipped_statement_versions
 skipped_statements
-slugs
 special_case_code_versions
 special_case_codes
 ssif_headers_mappings
@@ -234,9 +225,7 @@ ultimate_beneficial_owner_versions
 ultimate_beneficial_owners
 upcoming_statement_configuration_versions
 upcoming_statement_configurations
-users
 valuations
-versions
 
 buy_investment
 sell_investment
